@@ -10,7 +10,7 @@ const clerkWebHooks = async (req, res) => {
     await whook.verify(JSON.stringify(req.body), {
       'svix-id': req.headers['svix-id'],
       'svix-timestamp': req.headers['svix-timestamp'],
-      'svix-signatire': req.headers['svix-signature'],
+      'svix-signature': req.headers['svix-signature'],
     })
     const { data, type } = req.body
     switch (type) {
@@ -20,7 +20,7 @@ const clerkWebHooks = async (req, res) => {
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          photo: DataTransfer.image_url,
+          photo: data.image_url,
         }
         await userModel.create(userData)
         res.json({})
@@ -32,7 +32,7 @@ const clerkWebHooks = async (req, res) => {
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          photo: DataTransfer.image_url,
+          photo: data.image_url,
         }
         await userModel.findOneAndUpdate({ clerkId: data.id }, userData)
         res.json({})
