@@ -1,12 +1,12 @@
 //API Controller funstion to manage clerk user with database
 //http://localhost:4000/api/user/webhooks
-import { webhook } from 'svix'
-import userModel from '../models/userModel'
+import { Webhook } from 'svix'
+import userModel from '../models/userModel.js'
 
 const clerkWebHooks = async (req, res) => {
   try {
     //Create a Svix insttance with clerk webhook secret
-    const whook = new webhook(process.env.CLERK_WEBHOOK_SECRET)
+    const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
     await whook.verify(JSON.stringify(req.body), {
       'svix-id': req.headers['svix-id'],
       'svix-timestamp': req.headers['svix-timestamp'],
